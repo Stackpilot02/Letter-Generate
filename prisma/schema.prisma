@@ -1,0 +1,87 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  admin
+  operator
+  kepala_desa
+}
+
+enum JenisKelamin {
+  L
+  P
+}
+
+enum StatusHidup {
+  Hidup
+  Meninggal
+}
+
+model User {
+  id            Int      @id @default(autoincrement())
+  username      String   @unique @db.VarChar(50)
+  password_hash String   @db.VarChar(255)
+  nama          String   @db.VarChar(100)
+  jabatan       String?  @db.VarChar(100)
+  role          Role     @default(operator)
+  is_active     Boolean  @default(true)
+  surats        Surat[]  // Relation to Surat (dibuat_oleh)
+  
+  @@map("users")
+}
+
+model Penduduk {
+  id                Int          @id @default(autoincrement())
+  nik               String       @unique @db.VarChar(16)
+  no_kk             String       @db.VarChar(16)
+  nama_lengkap      String       @db.VarChar(100)
+  tempat_lahir      String?      @db.VarChar(50)
+  tanggal_lahir     DateTime?    @db.Date
+  jenis_kelamin     JenisKelamin
+  agama             String?      @db.VarChar(20)
+  status_perkawinan String?      @db.VarChar(20)
+  pekerjaan         String?      @db.VarChar(50)
+  alamat            String?      @db.Text
+  rt                String?      @db.VarChar(5)
+  rw                String?      @db.VarChar(5)
+  dusun             String?      @db.VarChar(50)
+  status_hidup      StatusHidup  @default(Hidup)
+  
+  surats            Surat[]      // Relation to Surat
+  
+  @@map("penduduk")
+}
+
+model Surat {
+  id             Int       @id @default(autoincrement())
+  nomor_surat    String    @unique @db.VarChar(50)
+  jenis_surat    String    @db.VarChar(100)
+  
+  nik_pemohon    String    @db.VarChar(16)
+  pemohon        Penduduk  @relation(fields: [nik_pemohon], references: [nik])
+  
+  tanggal_terbit DateTime  @db.Date
+  keperluan      String?   @db.Text
+  
+  dibuat_oleh_id Int
+  pembuat        User      @relation(fields: [dibuat_oleh_id], references: [id])
+  
+  file_pdf       String?   @db.VarChar(255) // Optional, as we generate on the fly or just save data
+  data_tambahan  String?   @db.Text         // JSON string for any extra form fields used in UI
+  
+  created_at     DateTime  @default(now()) @db.Timestamp(6)
+  updated_at     DateTime  @updatedAt @db.Timestamp(6)
+  
+  @@map("surat")
+}

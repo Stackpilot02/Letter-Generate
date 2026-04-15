@@ -1,0 +1,105 @@
+version: "2"
+type: frontend
+tech_stack:
+  - TypeScript
+  - Next.js 16 (App Router)
+  - React 19
+  - Tailwind CSS 4
+  - Prisma ORM
+  - NextAuth.js (credentials)
+routes:
+  - path: /
+    file: src/app/page.tsx
+    auth_required: false
+    description: Default landing page (Next.js starter content)
+  - path: /login
+    file: src/app/login/page.tsx
+    auth_required: false
+    description: Admin login page with credentials form
+  - path: /dashboard
+    file: src/app/dashboard/page.tsx
+    auth_required: true
+    description: Dashboard with counts for penduduk and surat
+  - path: /dashboard/penduduk
+    file: src/app/dashboard/penduduk/page.tsx
+    auth_required: true
+    description: Resident (penduduk) data table and import
+  - path: /dashboard/surat/buat
+    file: src/app/dashboard/surat/buat/page.tsx
+    auth_required: true
+    description: Create new village letter (surat)
+  - path: /dashboard/surat/arsip
+    file: src/app/dashboard/surat/arsip/page.tsx
+    auth_required: true
+    description: Archive of issued letters
+  - path: /api/auth/[...nextauth]
+    file: src/app/api/auth/[...nextauth]/route.ts
+    auth_required: false
+    description: NextAuth API routes (session, credentials callback)
+features:
+  - name: Admin login
+    description: Sign in with username and password using NextAuth credentials provider
+    files:
+      - src/app/login/page.tsx
+      - src/app/login/form.tsx
+      - src/lib/auth.ts
+    entry_route: /login
+    user_interactions:
+      - Enter username in the username field
+      - Enter password in the password field
+      - Submit the form to sign in
+      - See error message when credentials are invalid
+      - Redirect to dashboard after successful login
+    api_calls:
+      - method: POST
+        endpoint: /api/auth/callback/credentials
+    auth_required: false
+  - name: Dashboard overview
+    description: View summary statistics for residents and letters from the database
+    files:
+      - src/app/dashboard/page.tsx
+    entry_route: /dashboard
+    user_interactions:
+      - Open dashboard after authentication
+      - Read total penduduk, total surat, and surat hari ini cards
+    api_calls: []
+    auth_required: true
+  - name: Penduduk management
+    description: Browse and import resident records (Excel)
+    files:
+      - src/app/dashboard/penduduk/page.tsx
+      - src/app/dashboard/penduduk/actions.ts
+      - src/app/dashboard/penduduk/import-button.tsx
+    entry_route: /dashboard/penduduk
+    user_interactions:
+      - View the penduduk table
+      - Use import flow to upload spreadsheet data
+    api_calls: []
+    auth_required: true
+  - name: Create surat
+    description: Fill form to generate a new village letter
+    files:
+      - src/app/dashboard/surat/buat/page.tsx
+      - src/app/dashboard/surat/buat/client-form.tsx
+    entry_route: /dashboard/surat/buat
+    user_interactions:
+      - Select letter type and fill required fields
+      - Submit to create or preview document flow as implemented
+    api_calls: []
+    auth_required: true
+  - name: Surat archive
+    description: View list of archived or issued letters
+    files:
+      - src/app/dashboard/surat/arsip/page.tsx
+    entry_route: /dashboard/surat/arsip
+    user_interactions:
+      - Open archive page and browse surat list
+    api_calls: []
+    auth_required: true
+known_limitations:
+  - issue: Root path still shows default create-next-app marketing content rather than app-specific landing
+    location: src/app/page.tsx
+    impact: Users may expect desa branding on home; consider redirect to login or dashboard
+  - issue: ESLint reports no-explicit-any and react/no-unescaped-entities in several dashboard files
+    location: src/app/dashboard/penduduk, src/app/dashboard/surat/buat
+    impact: Code quality and CI lint may fail until resolved

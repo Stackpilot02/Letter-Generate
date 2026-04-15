@@ -1,0 +1,18 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:3000",
+  "executionArgs": {
+    "projectName": "generate-surat",
+    "projectPath": "f:\\Apps\\Generate-Surat\\generate-surat",
+    "testIds": [],
+    "additionalInstruction": "For {{LOGIN_USER}} use admin and for {{LOGIN_PASSWORD}} use admin123 (default Prisma seed credentials).",
+    "serverMode": "production",
+    "envs": {
+      "API_KEY": "sk-user--4_xbomFzyzIpppSaN4bGQ-prupjg4yfmep6VQwO4Kh6IrYrbpEtQgX7VjYAxnRpm-d2EvrwKbCuZRE3FIzKeMnFsT0S5CE6mEEJjZzko7FrNHw-0rOFI1paC-ccl7B-1AA"
+    }
+  },
+  "serverPort": 60006,
+  "proxy": "http://1fdb79a9-df30-4792-9a67-5ca1873fc50d:7QgrNppLS7xVTcU6xE4mAb6nZmNzAkGR@tun.testsprite.com:8080"
+}

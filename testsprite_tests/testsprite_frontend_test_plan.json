@@ -1,0 +1,928 @@
+[
+  {
+    "id": "TC001",
+    "title": "Issue a surat from template and archive it for later retrieval",
+    "description": "Verifies an operator can create a surat by selecting a template and resident, generate a PDF, and see the surat saved in the archive with a downloadable PDF.",
+    "category": "Create surat",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the username field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to create a surat"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid letter type template"
+      },
+      {
+        "type": "action",
+        "description": "Search for a penduduk using a valid NIK or name from the search results"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid value into the keperluan field"
+      },
+      {
+        "type": "action",
+        "description": "Generate the PDF for the surat"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to the surat archive"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the newly created surat appears in the archive list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the archived surat provides a downloadable PDF"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC002",
+    "title": "Sign in to access the dashboard overview",
+    "description": "Verifies an operator can sign in with valid credentials and is redirected to the dashboard where overview statistics are visible.",
+    "category": "Admin login",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the username field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user lands on the dashboard"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify dashboard overview statistics are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC003",
+    "title": "Block access to protected dashboard route while logged out",
+    "description": "Verifies a logged-out user attempting to open a protected dashboard page is redirected to the login page.",
+    "category": "Admin login",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user lands on the login page"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC004",
+    "title": "Search archive by name, date range, and letter type then download PDF",
+    "description": "Verifies the operator can filter the archive using name, date range, and letter type, open a result, and access the stored PDF for download.",
+    "category": "Surat archive",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the username field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to create a surat"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid letter type template"
+      },
+      {
+        "type": "action",
+        "description": "Search for a penduduk using a valid NIK or name from the search results"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid value into the keperluan field"
+      },
+      {
+        "type": "action",
+        "description": "Generate the PDF for the surat"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to the surat archive"
+      },
+      {
+        "type": "action",
+        "description": "Fill the name filter with a value taken from the selected penduduk"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid start date in the date range filter"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid end date in the date range filter"
+      },
+      {
+        "type": "action",
+        "description": "Select the same letter type used for creation in the letter type filter"
+      },
+      {
+        "type": "action",
+        "description": "Run the archive search"
+      },
+      {
+        "type": "action",
+        "description": "Open a surat from the filtered results"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the surat detail view shows metadata for the selected surat"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the detail view provides a downloadable stored PDF"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC005",
+    "title": "Return to intended dashboard page after login from a protected route",
+    "description": "Verifies a user redirected to login from a protected route can sign in and then reach a dashboard page successfully.",
+    "category": "Admin login",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/penduduk"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the username field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user is on a dashboard page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the penduduk management view is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC006",
+    "title": "Import penduduk from a valid spreadsheet and see records in the table",
+    "description": "Verifies an operator can complete the import flow with a valid spreadsheet and the imported residents appear in the penduduk table.",
+    "category": "Penduduk management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the username field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation option to open penduduk management"
+      },
+      {
+        "type": "action",
+        "description": "Start the import flow"
+      },
+      {
+        "type": "action",
+        "description": "Upload a valid spreadsheet file containing penduduk data"
+      },
+      {
+        "type": "action",
+        "description": "Confirm the import mapping or field confirmation step if shown"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the penduduk table shows newly imported records"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "View dashboard overview statistics after login",
+    "description": "Verifies an authenticated operator can view the dashboard overview cards for total penduduk, total surat, and surat hari ini.",
+    "category": "Dashboard overview",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the username field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify dashboard overview statistics are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC008",
+    "title": "Create surat shows required-field validation and succeeds after fixing",
+    "description": "Verifies missing required fields in surat creation show validation errors and the surat can be generated successfully after completing required inputs.",
+    "category": "Create surat",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the username field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to create a surat"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid letter type template"
+      },
+      {
+        "type": "action",
+        "description": "Search for a penduduk using a valid NIK or name from the search results"
+      },
+      {
+        "type": "action",
+        "description": "Attempt to generate or submit the surat with required fields still empty"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a required-field validation error is visible"
+      },
+      {
+        "type": "action",
+        "description": "Fill all remaining required fields with valid values"
+      },
+      {
+        "type": "action",
+        "description": "Generate the PDF for the surat"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a PDF preview or generated document view is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC009",
+    "title": "Browse penduduk table after authentication",
+    "description": "Verifies an operator can access the penduduk management page and view the resident table.",
+    "category": "Penduduk management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the username field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation option to open penduduk management"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the penduduk table is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC010",
+    "title": "Search penduduk by NIK populates surat form data",
+    "description": "Verifies selecting a penduduk by NIK/name auto-fills the surat form with resident data so the operator does not need to retype it.",
+    "category": "Create surat",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the username field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to create a surat"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid letter type template"
+      },
+      {
+        "type": "action",
+        "description": "Search for a penduduk by NIK"
+      },
+      {
+        "type": "action",
+        "description": "Select a penduduk from the search results"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the surat form shows resident identity fields populated from the selected penduduk"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC011",
+    "title": "View recent archived surat when no search criteria is provided",
+    "description": "Verifies the archive page shows recent surat items when the user does not enter any search criteria.",
+    "category": "Surat archive",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the username field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to the surat archive"
+      },
+      {
+        "type": "action",
+        "description": "Ensure search inputs are left empty"
+      },
+      {
+        "type": "action",
+        "description": "Run the search or refresh the archive list if needed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a list of recent archived surat items is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC012",
+    "title": "Open dashboard directly when already authenticated",
+    "description": "Verifies a signed-in operator can open the dashboard route directly and see the overview statistics.",
+    "category": "Dashboard overview",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the username field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user lands on the dashboard"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify dashboard overview statistics are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC013",
+    "title": "Preview surat before generating PDF",
+    "description": "Verifies an operator can preview the surat content after filling inputs and before generating the final PDF.",
+    "category": "Create surat",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the username field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to create a surat"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid letter type template"
+      },
+      {
+        "type": "action",
+        "description": "Search for a penduduk using a valid NIK or name from the search results"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid value into the keperluan field"
+      },
+      {
+        "type": "action",
+        "description": "Open the surat preview"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a surat preview is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC014",
+    "title": "Reject invalid credentials without signing in",
+    "description": "Verifies the login form shows an invalid-credentials error and the user remains unauthenticated when incorrect credentials are submitted.",
+    "category": "Admin login",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill invalid-user into the username field"
+      },
+      {
+        "type": "action",
+        "description": "Fill invalid-password into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an invalid credentials error is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user is not on the dashboard"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC015",
+    "title": "Open archive item detail from list",
+    "description": "Verifies a user can open an archived surat from the list and view its details.",
+    "category": "Surat archive",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the username field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to the surat archive"
+      },
+      {
+        "type": "action",
+        "description": "Open a surat item from the archive list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the surat detail view is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC016",
+    "title": "Show validation error for unsupported or invalid import file",
+    "description": "Verifies the import flow blocks completion and shows a clear validation error when the uploaded file format or columns are invalid.",
+    "category": "Penduduk management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the username field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation option to open penduduk management"
+      },
+      {
+        "type": "action",
+        "description": "Start the import flow"
+      },
+      {
+        "type": "action",
+        "description": "Upload a spreadsheet file with invalid columns or an unsupported format"
+      },
+      {
+        "type": "action",
+        "description": "Submit the import"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an import validation error explaining required format or columns is visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC017",
+    "title": "Manual penduduk entry path allows surat generation (if supported)",
+    "description": "Verifies the operator can proceed to generate a surat by manually entering resident details when not selecting a penduduk from search (if the UI supports manual entry).",
+    "category": "Create surat",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the username field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to create a surat"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid letter type template"
+      },
+      {
+        "type": "action",
+        "description": "Choose the option to enter penduduk data manually if available"
+      },
+      {
+        "type": "action",
+        "description": "Fill valid values into the required resident identity fields"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid value into the keperluan field"
+      },
+      {
+        "type": "action",
+        "description": "Generate the PDF for the surat"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a PDF preview or generated document view is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC018",
+    "title": "Prevent login submission with missing required fields",
+    "description": "Verifies the login form blocks submission and shows validation feedback when required fields are empty.",
+    "category": "Admin login",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a required-field validation error is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user is not on the dashboard"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC019",
+    "title": "Long keperluan text is accepted and can be generated into a PDF",
+    "description": "Verifies the surat form accepts a long keperluan value and still generates a PDF without blocking the operator.",
+    "category": "Create surat",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the username field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to create a surat"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid letter type template"
+      },
+      {
+        "type": "action",
+        "description": "Search for a penduduk using a valid NIK or name from the search results"
+      },
+      {
+        "type": "action",
+        "description": "Fill a very long text value into the keperluan field"
+      },
+      {
+        "type": "action",
+        "description": "Generate the PDF for the surat"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a PDF preview or generated document view is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC020",
+    "title": "Cancel the import flow without changing the table",
+    "description": "Verifies an operator can exit the import flow without importing and the penduduk table remains unchanged.",
+    "category": "Penduduk management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the username field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation option to open penduduk management"
+      },
+      {
+        "type": "action",
+        "description": "Start the import flow"
+      },
+      {
+        "type": "action",
+        "description": "Cancel or close the import flow"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the import dialog or import step is no longer visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the penduduk table is still displayed"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC021",
+    "title": "Special characters in filled fields do not block PDF generation",
+    "description": "Verifies entering names/addresses with quotes or special characters in available fields still allows generating the surat PDF.",
+    "category": "Create surat",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the username field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to create a surat"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid letter type template"
+      },
+      {
+        "type": "action",
+        "description": "Search for a penduduk using a valid NIK or name from the search results"
+      },
+      {
+        "type": "action",
+        "description": "Fill a value containing special characters into an editable text field available on the form"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid value into the keperluan field"
+      },
+      {
+        "type": "action",
+        "description": "Generate the PDF for the surat"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a PDF preview or generated document view is displayed"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC022",
+    "title": "Preserve typed username when password is missing on submit",
+    "description": "Verifies the username input is preserved after a blocked submission due to missing password so the user can complete sign-in efficiently.",
+    "category": "Admin login",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the username field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-in form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a required-field validation error is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the username field still contains {{LOGIN_USER}}"
+      }
+    ],
+    "priority": "Low"
+  }
+]
