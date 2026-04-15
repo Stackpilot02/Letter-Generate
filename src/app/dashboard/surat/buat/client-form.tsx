@@ -20,7 +20,8 @@ import {
   ZoomOut,
   Maximize2,
   MousePointer2,
-  FileCheck2
+  FileCheck2,
+  Download
 } from "lucide-react";
 import { saveSuratAction, getNextNomorSuratAction } from "./actions";
 import { useRouter } from "next/navigation";
@@ -86,17 +87,64 @@ export function BuatSuratClient({ pendudukList }: { pendudukList: PendudukList }
     
     setLoading(true);
     try {
-      await saveSuratAction({
-        nik_pemohon: nikPemilik,
-        jenis_surat: jenisSurat,
-        keperluan: keperluan || "Mengurus Keperluan Administrasi",
-        nomor_surat: nomorSurat,
-      });
-      setSaved(true);
+      if (!saved) {
+        await saveSuratAction({
+          nik_pemohon: nikPemilik,
+          jenis_surat: jenisSurat,
+          keperluan: keperluan || "Mengurus Keperluan Administrasi",
+          nomor_surat: nomorSurat,
+        });
+        setSaved(true);
+      }
       setTimeout(() => {
         window.print();
         router.push("/dashboard/surat/arsip");
       }, 1000);
+    } catch (err: any) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSaveAndDownloadPDF = async () => {
+    if (!jenisSurat || !nikPemilik) return;
+    
+    setLoading(true);
+    try {
+      if (!saved) {
+        await saveSuratAction({
+          nik_pemohon: nikPemilik,
+          jenis_surat: jenisSurat,
+          keperluan: keperluan || "Mengurus Keperluan Administrasi",
+          nomor_surat: nomorSurat,
+        });
+        setSaved(true);
+      }
+
+      // @ts-ignore - html2pdf doesn't have official types out of the box in this setup
+      const html2pdf = (await import('html2pdf.js')).default;
+      const element = document.getElementById('printable-area');
+      
+      const opt = {
+        margin:       0,
+        filename:     `Surat_${wargsTerpilih?.nama_lengkap || 'Warga'}_${nomorSurat.replace(/\//g, '-')}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, logging: false },
+        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+      };
+      
+      // We need to temporarily remove the scale transform from the preview so it renders perfectly
+      const originalTransform = element?.style.transform;
+      if (element) element.style.transform = "scale(1)";
+
+      await html2pdf().set(opt).from(element).save();
+      
+      if (element && originalTransform) element.style.transform = originalTransform;
+
+      setTimeout(() => {
+        router.push("/dashboard/surat/arsip");
+      }, 1500);
     } catch (err: any) {
       console.error(err);
     } finally {
@@ -223,33 +271,46 @@ export function BuatSuratClient({ pendudukList }: { pendudukList: PendudukList }
             </div>
           </div>
 
-          <div className="pt-4">
+          <div className="pt-4 flex flex-col gap-3">
             <Button 
               onClick={handleSaveAndPrint} 
               disabled={!jenisSurat || !nikPemilik || loading}
               className={cn(
-                "w-full h-14 font-black rounded-2xl shadow-xl transition-all active:scale-95 text-base gap-3",
+                "w-full h-12 font-bold rounded-xl shadow-lg transition-all active:scale-95 gap-2",
                 saved 
                   ? "bg-emerald-500 hover:bg-emerald-600 text-white" 
                   : "bg-blue-600 hover:bg-blue-700 text-white shadow-blue-500/20"
               )}
             >
               {loading ? (
-                <Loader2 className="animate-spin w-5 h-5 text-white" />
+                <Loader2 className="animate-spin w-4 h-4 text-white" />
               ) : saved ? (
                 <>
-                  <CheckCircle2 className="w-5 h-5" />
-                  BERHASIL & DICETAK
+                  <CheckCircle2 className="w-4 h-4" />
+                  TERSIPAN & DICETAK
                 </>
               ) : (
                 <>
-                  <Printer className="w-5 h-5" />
+                  <Printer className="w-4 h-4" />
                   SIMPAN & CETAK
                 </>
               )}
             </Button>
-            <p className="text-[10px] text-center text-slate-600 mt-4 font-medium uppercase tracking-widest">
-              Gunakan Google Chrome untuk hasil terbaik
+            
+            <Button 
+              onClick={handleSaveAndDownloadPDF} 
+              disabled={!jenisSurat || !nikPemilik || loading}
+              variant="outline"
+              className={cn(
+                "w-full h-12 font-bold rounded-xl transition-all active:scale-95 gap-2 bg-slate-900 border-slate-700 text-slate-200 hover:bg-slate-800 hover:text-white hover:border-slate-600"
+              )}
+            >
+              <Download className="w-4 h-4 text-slate-400" />
+              SIMPAN & UNDUH PDF
+            </Button>
+
+            <p className="text-[10px] text-center text-slate-600 mt-2 font-medium uppercase tracking-widest">
+              Gunakan Google Chrome untuk hasil cetak terbaik
             </p>
           </div>
         </div>
